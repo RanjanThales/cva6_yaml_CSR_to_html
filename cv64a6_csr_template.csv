@@ -1,0 +1,670 @@
+,csr,description,address,privilege_mode
+0,CSR_DCSR,Debug control and status register,0x7b0,D
+1,CSR_DPC,Debug PC,0x7b1,D
+2,CSR_DSCRATCH0,Debug scratch register 0,0x7b2,D
+3,CSR_DSCRATCH1,Debug scratch register 1,0x7b3,D
+4,CSR_SSTATUS,Supervisor status register,0x100,S
+5,CSR_SIE,Supervisor Interrupt enable register,0x104,S
+6,CSR_SIP,Supervisor interrupt pending,0x144,S
+7,CSR_STVEC,Supervisor trap handler base address,0x105,S
+8,CSR_SCOUNTEREN,Supervisor counter enable,0x106,S
+9,CSR_SSCRATCH,Scartch Register for supervisor trap handlers,0x140,S
+10,CSR_SEPC,Supervisor exception program counter,0x141,S
+11,CSR_SCAUSE,Supervisor trap cause,0x142,S
+12,CSR_STVAL,Supervisor bad address or instruction,0x143,S
+13,CSR_SATP,Supervisor address translation and protection,0x180,S
+14,CSR_MSTATUS,Machine Status Register,0x300,M
+15,CSR_MISA,ISA and extensions,0x301,M
+16,CSR_MEDELEG,Machine exception delegation register,0x302,M
+17,CSR_MIDELEG,Machine interrupt delegation register,0x303,M
+18,CSR_MIE,Machine Interrupt enable register,0x304,M
+19,CSR_MTVEC,Machine trap-handler base address,0x305,M
+20,CSR_MCOUNTEREN,Machine counter enable,0x306,M
+21,CSR_MSCRATCH,Scratch register for machine trap handlers,0x340,M
+22,CSR_MEPC,Machine exception program counter,0x341,M
+23,CSR_MCAUSE,Machine Trap cause,0x342,M
+24,CSR_MTVAL,Machine bad address or Instruction,0x343,M
+25,CSR_MIP,Machine Interrupt Pending,0x344,M
+26,CSR_MVENDORID,Vendor ID,0xf11,M
+27,CSR_MARCHID,Architecture ID,0xf12,M
+28,CSR_MIMPID,Implementation ID,0xf13,M
+29,CSR_MHARTID,Hardware Thread ID,0xf14,M
+30,CSR_MCYCLE,Machine Cycle counter,0xb00,M
+31,CSR_MINSTRET,Machine Instruction retired counter,0xb02,M
+32,CSR_GPC1,GPC1-64bits,0xb03,M
+33,CSR_GPC2,GPC2-64bits,0xb04,M
+34,CSR_GPC3,GPC3-64bits,0xb05,M
+35,CSR_GPC4,GPC4-64bits,0xb06,M
+36,CSR_GPC5,GPC5-64bits,0xb07,M
+37,CSR_GPC6,GPC6-64bits,0xb08,M
+38,CSR_GPC1_PMES,Machine performance-monitoring event selector,0x323,M
+39,CSR_GPC2_PMES,Machine performance-monitoring event selector,0x324,M
+40,CSR_GPC3_PMES,Machine performance-monitoring event selector,0x325,M
+41,CSR_GPC4_PMES,Machine performance-monitoring event selector,0x326,M
+42,CSR_GPC5_PMES,Machine performance-monitoring event selector,0x327,M
+43,CSR_GPC6_PMES,Machine performance-monitoring event selector,0x328,M
+44,CSR_ICACHE,Custom Register to enable/disable for Icache [bit 0]  ,0x7c0,M
+45,CSR_DCACHE,Custom Register to enable/disable for Dcache [bit 0],0x7c1,M
+46,CSR_PMPCFG0,Physical Memory Protection CSRs,0x3a0,M
+47,CSR_PMPCFG2,Physical Memory Protection CSRs,0x3a2,M
+48,CSR_PMPADDR0,PMP address registers,0x3b0,M
+49,CSR_PMPADDR1,PMP address registers,0x3b1,M
+50,CSR_PMPADDR2,PMP address registers,0x3b2,M
+51,CSR_PMPADDR3,PMP address registers,0x3b3,M
+52,CSR_PMPADDR4,PMP address registers,0x3b4,M
+53,CSR_PMPADDR5,PMP address registers,0x3b5,M
+54,CSR_PMPADDR6,PMP address registers,0x3b6,M
+55,CSR_PMPADDR7,PMP address registers,0x3b7,M
+56,CSR_PMPADDR8,PMP address registers,0x3b8,M
+57,CSR_PMPADDR9,PMP address registers,0x3b9,M
+58,CSR_PMPADDR10,PMP address registers,0x3ba,M
+59,CSR_PMPADDR11,PMP address registers,0x3bb,M
+60,CSR_PMPADDR12,PMP address registers,0x3bc,M
+61,CSR_PMPADDR13,PMP address registers,0x3bd,M
+62,CSR_PMPADDR14,PMP address registers,0x3be,M
+63,CSR_PMPADDR15,PMP address registers,0x3bf,M
+64,CSR_FFLAGS,Floating point Accrued Exceptions,0x1,U
+65,CSR_FRM,Floating point dynamic rounding mode,0x2,U
+66,CSR_FCSR,Floating point Control and Status Register,0x3,U
+67,CSR_FTRAN,Floating Point Custom CSR,0x800,U
+68,CSR_CYCLE,Cycle counter for RDCYCLE instruction,0xc00,U
+69,CSR_INSTRET,Instructions-retired counter for RDINSTRET instruction,0xc02,U
+
+
+CSR : ,CSR_DCSR
+CSR Address : ,0x7b0
+Reset Value : , 
+Bit#,Mode,Description
+31:28,R,"0(No debug support), 4(Debug support exists), 15(there is debug support, but it doesnt conform to any available version)"
+15:15,RW,0: ebreak instructions in M-mode behave as described in the Privileged Spec.1: ebreak instructions in M-mode enter Debug Mode.
+13:13,RW,0: ebreak instructions in S-mode behave as described in the Privileged Spec.1: ebreak instructions in S-mode enter Debug Mode.
+12:12,RW,0: ebreak instructions in U-mode behave as described in the Privileged Spec. 1: ebreak instructions in U-mode enter Debug
+11:11,WARL,(0) Interrupts (including NMI) are disabled during single stepping. (1) Interrupts (including NMI) are enabled during single stepping.
+10:10,WARL,(0) Increment counters as usual. (1) increment any hart-local counters while in Debug Mode or on ebreak instructions that cause entry into Debug Mode.
+9:9,WARL,(0) Increment timers as usual. (1) increment any hart-local timers while in Debug Mode.
+8:6,RW,Explains why Debug Mode was entered
+4:4,WARL,(0) MPRV in mstatus is ignored in Debug Mode.(1) MPRV in mstatus takes effect in Debug Mode.
+3:3,R,"When set, there is a Non-Maskable-Interrupt (NMI) pending for the hart."
+2:2,RW,"When set and not in Debug Mode, the hart will only execute a single instruction and then enter Debug Mode."
+1:1,RW,"When set and not in Debug Mode, the hart will only execute a single instruction and then enter Debug Mode."
+
+
+CSR : ,CSR_DPC
+CSR Address : ,0x7b1
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,update with the virtual address of the next instruction to be executed        
+
+
+CSR : ,CSR_DSCRATCH0
+CSR Address : ,0x7b2
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,Optional scratch register
+
+
+CSR : ,CSR_DSCRATCH1
+CSR Address : ,0x7b3
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,Optional scratch register
+
+
+CSR : ,CSR_SSTATUS
+CSR Address : ,0x100
+Reset Value : , 
+Bit#,Mode,Description
+63:63,RW,SD
+33:32,RW,UXL 
+31:20,WPRI,reserved for future use 
+19:19,RW,The MXR bit modifies the privilege with which loads access virtual memory
+18:18,RW,The SUM bit modifies the privilege with which S-mode loads and stores access virtual memory.
+17:17,WPRI,reserved for future use 
+16:15,RW,XS 
+14:13,RW,FS 
+12:9,WPRI,reserved for future use 
+8:8,RW,SPP bit indicates the privilege level at which a hart was executing before entering supervisor mode.
+7:6,WPRI,reserved for future use
+5:5,RW,The SPIE bit indicates whether supervisor interrupts were enabled prior to trappin into supervisor mode.
+4:4,RW,"When a URET instruction is executed, UIE is set to UPIE, and UPIE is set to 1. "
+3:2,WPRI,reserved for future use
+1:1,RW,The SIE bit enables or disables all interrupts in supervisor mode. 
+0:0,RW,The UIE bit enables or disables user-mode interrupts.
+
+
+CSR : ,CSR_SIE
+CSR Address : ,0x104
+Reset Value : , 
+Bit#,Mode,Description
+63:10,RW,reserved for future use
+9:9,RW,Supervisorlevel external interrupts are disabled when the SEIE bit        
+8:8,RW,User-level external interrupts are disabled when the UEIE bit in the sie register is clear.
+7:6,RW,reserved for future use
+5:5,RW,Supervisorlevel timer interrupts are disabled when the STIE bit in the sie register is clear.        
+4:4,RW,User-level timer interrupts are disabled when the UTIE bit in the sie register is clear.        
+3:2,RW,reserved for future use
+1:1,RW,Supervisor-level software interrupts are disabled when the SSIE bit in the sie register is clear.
+0:0,RW,User-level software interrupts are disabled when the USIE bit in the sie register is clear        
+
+
+CSR : ,CSR_SIP
+CSR Address : ,0x144
+Reset Value : , 
+Bit#,Mode,Description
+63:10,RW,reserved for future use
+9:9,RW,A supervisor-level external interrupt is pending if the SEIP bit in the sip register is set.
+8:8,RW,UEIP may be written by S-mode software to indicate to U-mode that an external interrupt is pending.        
+7:6,RW,reserved for future use
+5:5,RW,A supervisor-level timer interrupt is pending if the STIP bit in the sip register is set
+4:4,RW,A user-level timer interrupt is pending if the UTIP bit in the sip register is set
+3:2,RW,reserved for future use
+1:1,RW,A supervisor-level software interrupt is triggered on the current hart by writing 1 to its supervisor software interrupt-pending (SSIP) bit 
+0:0,RW,A user-level software interrupt is triggered on the current hart by  riting 1 to its user software interrupt-pending (USIP) bit 
+
+
+CSR : ,CSR_STVEC
+CSR Address : ,0x105
+Reset Value : , 
+Bit#,Mode,Description
+63:2,WARL,"The BASE field in stvec is a WARL field that can hold any valid virtual or physical address, subject to alignment constraints"
+1:0,WARL,"When MODE=Direct, all traps into supervisor mode cause the pc to be set to the address in the BASE field. When MODE=Vectored, all synchronous exceptions into supervisor mode cause the pc to be set to the address in the BASE field, whereas interrupts cause the pc to be set to the address in the BASE field plus four times the interrupt cause number."
+
+
+CSR : ,CSR_SCOUNTEREN
+CSR Address : ,0x106
+Reset Value : , 
+Bit#,Mode,Description
+31:3,RW,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted."
+2:2,RW,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted"
+1:1,RW,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted        "
+0:0,RW,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted"
+
+
+CSR : ,CSR_SSCRATCH
+CSR Address : ,0x140
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,it is used to hold a pointer to the hart-local supervisor context while the hart is executing user code.
+
+
+CSR : ,CSR_SEPC
+CSR Address : ,0x141
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,"On implementations that support only IALIGN=32, the two low bits (sepc[1:0]) are always zero"
+
+
+CSR : ,CSR_SCAUSE
+CSR Address : ,0x142
+Reset Value : , 
+Bit#,Mode,Description
+63:63,RW,The Interrupt bit in the scause register is set if the trap was caused by an interrupt.
+62:0,WLRL,The Exception Code field contains a code identifying the last exception     
+
+
+CSR : ,CSR_STVAL
+CSR Address : ,0x143
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,"when a trap is taken into S-mode, stval is written with exception-specific information to assist software in handling the trap. "
+
+
+CSR : ,CSR_SATP
+CSR Address : ,0x180
+Reset Value : , 
+Bit#,Mode,Description
+63:60,WARL,this selects the current address-translation scheme.        
+59:44,WARL,"address space identifier, which facilitates address-translation fences on a per-address-space basis"
+43:0,WARL,"physical page number (PPN), this holds the root page table "
+
+
+CSR : ,CSR_MSTATUS
+CSR Address : ,0x300
+Reset Value : , 
+Bit#,Mode,Description
+63:63,RW,SD 
+62:36,WPRI,reserved for future use 
+35:34,RW,SXL 
+33:32,RW,UXL 
+31:23,WPRI,reserved for future use 
+22:22,RW,Trap SRET: supports intercepting the supervisor exception return instruction
+21:21,RW,Timeout Wait: supports intercepting the WFI instruction 
+20:20,RW,"Trap Virtual Memory,supports intercepting supervisor virtual-memory management operations."
+19:19,RW,Make eXecutable Readable: modifies the privilege with which loads access virtual memory.        
+18:18,RW,permit Supervisor User Memory access
+17:17,RW,Modify PRiVilege 
+16:15,RW,use to reduce the cost of context save and restore by setting and tracking the current state
+14:13,RW,use to reduce the cost of context save and restore by setting and tracking the current state 
+12:11,RW,"xPP fields can only hold privilege modes up to x, so MPP is two bits wide, SPP is one bit wide, and UPP is implicitly zero "
+10:9,WPRI,reserved for future use 
+8:8,RW,"xPP fields can only hold privilege modes up to x, so MPP is two bits wide, SPP is one bit wide, and UPP is implicitly zero  "
+7:7,RW,MPIE       
+6:6,WPRI,reserved for future use 
+5:5,RW,indicates whether supervisor interrupts were enabled prior to trapping into supervisor mode        
+4:4,RW,indicates whether user-level interrupts were enabled prior to taking a user-level trap
+3:3,RW,Global interrupt-enable bits 
+2:2,WPRI,reserved for future use 
+1:1,RW,Global interrupt-enable bits 
+0:0,RW,Global interrupt-enable bits 
+
+
+CSR : ,CSR_MISA
+CSR Address : ,0x301
+Reset Value : , 
+Bit#,Mode,Description
+63:62,WARL,"Machine XLEN, field encodes the native base integer ISA width"
+25:0,WARL,"this encodes the presence of the standard extensions, with a single bit per letter of the alphabet"
+
+
+CSR : ,CSR_MEDELEG
+CSR Address : ,0x302
+Reset Value : , 
+Bit#,Mode,Description
+63:0,WARL,It has a bit position allocated for every synchronous exception` 
+
+
+CSR : ,CSR_MIDELEG
+CSR Address : ,0x303
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,holds trap delegation bits for individual interrupts 
+
+
+CSR : ,CSR_MIE
+CSR Address : ,0x304
+Reset Value : , 
+Bit#,Mode,Description
+11:11,WARL,enables machine external interrupts when set 
+9:9,WARL,"enable S-mode external interrupts,        "
+8:8,WARL,enables U-mode external interrupts
+7:7,WARL,timer interrupt-enable bit for M-mode 
+5:5,WARL,timer interrupt-enable bit for S-mode
+4:4,WARL,timer interrupt-enable bit for U-mode
+3:3,RW,enable M-mode Software interrupts 
+1:1,WARL,enable S-mode software interrupts
+0:0,WARL,enable U-mode software interrrupts 
+
+
+CSR : ,CSR_MTVEC
+CSR Address : ,0x305
+Reset Value : , 
+Bit#,Mode,Description
+63:2,WARL,"holds trap vector configuration, "
+1:0,WARL,impose additional alignment constraints on the value in the BASE field        
+
+
+CSR : ,CSR_MCOUNTEREN
+CSR Address : ,0x306
+Reset Value : , 
+Bit#,Mode,Description
+31:3,WARL,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted."
+2:2,WARL,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted"
+1:1,WARL,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted        "
+0:0,WARL,"When its is clear, attempts to read the cycle,time, instret, or hpmcountern register while executing in U-mode will cause an illegal instruction exception. When one of these bits is set, access to the corresponding register is permitted"
+
+
+CSR : ,CSR_MSCRATCH
+CSR Address : ,0x340
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,hold a pointer to a machine-mode hart-local context space and swapped with a user register upon entry to an M-mode trap handler
+
+
+CSR : ,CSR_MEPC
+CSR Address : ,0x341
+Reset Value : , 
+Bit#,Mode,Description
+63:0,WARL,holds all valid physical and virtual addresses 
+
+
+CSR : ,CSR_MCAUSE
+CSR Address : ,0x342
+Reset Value : , 
+Bit#,Mode,Description
+63:63,RW,its set if the trap was caused by an interrupt 
+62:0,WLRL,hold supported exception codes        
+
+
+CSR : ,CSR_MTVAL
+CSR Address : ,0x343
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,"When a trap is taken into M-mode, mtval is either set to zero or written with exception-specific information to assist software in handling the trap.        "
+
+
+CSR : ,CSR_MIP
+CSR Address : ,0x344
+Reset Value : , 
+Bit#,Mode,Description
+11:11,R,indicate external interrupts pending
+9:9,RW,SEIP may be written by M-mode software to indicate to S-mode that an external interrupt is pending               
+8:8,RW,enables external interrupts
+7:7,R,Correspond to timer interrupt-pending bits for machine interrupt 
+5:5,RW,Correspond to timer interrupt-pending bits for Supervisor interrupt  
+4:4,RW,Correspond to timer interrupt-pending bits for user interrupt 
+3:3,R,use for remote harts to provide machine-mode interprocessor interrupts 
+1:1,RW,A hart to directly write its own SSIP bits when running in the appropriate mode
+0:0,RW,A hart to directly write its own USIP bits when running in the appropriate mode 
+
+
+CSR : ,CSR_MVENDORID
+CSR Address : ,0xf11
+Reset Value : , 
+Bit#,Mode,Description
+31:7,R,Contain encoding for number of one-byte continuation codes discarding the parity bit 
+6:0,R,Contain encording for the final byte discarding the parity bit
+
+
+CSR : ,CSR_MARCHID
+CSR Address : ,0xf12
+Reset Value : , 
+Bit#,Mode,Description
+63:0,R,Provide Encoding the base microarchitecture of the hart        
+
+
+CSR : ,CSR_MIMPID
+CSR Address : ,0xf13
+Reset Value : , 
+Bit#,Mode,Description
+63:0,R,Provides unique encoding of the version of the processor implementation
+
+
+CSR : ,CSR_MHARTID
+CSR Address : ,0xf14
+Reset Value : , 
+Bit#,Mode,Description
+63:0,R,contains the integer ID of the hardware thread running the code
+
+
+CSR : ,CSR_MCYCLE
+CSR Address : ,0xb00
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,counts the number of clock cycles executed by the processor core        
+
+
+CSR : ,CSR_MINSTRET
+CSR Address : ,0xb02
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,counts the number of instructions the hart has retired
+
+
+CSR : ,CSR_GPC1
+CSR Address : ,0xb03
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,64-bits of GPC1
+
+
+CSR : ,CSR_GPC2
+CSR Address : ,0xb04
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,64-bits of GPC2
+
+
+CSR : ,CSR_GPC3
+CSR Address : ,0xb05
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,64-bits of GPC3
+
+
+CSR : ,CSR_GPC4
+CSR Address : ,0xb06
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,64-bits of GPC4
+
+
+CSR : ,CSR_GPC5
+CSR Address : ,0xb07
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,64-bits of GPC5
+
+
+CSR : ,CSR_GPC6
+CSR Address : ,0xb08
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,64-bits of GPC6
+
+
+CSR : ,CSR_GPC1_PMES
+CSR Address : ,0x323
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,event selector CSRs
+
+
+CSR : ,CSR_GPC2_PMES
+CSR Address : ,0x324
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,event selector CSRs
+
+
+CSR : ,CSR_GPC3_PMES
+CSR Address : ,0x325
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,event selector CSRs
+
+
+CSR : ,CSR_GPC4_PMES
+CSR Address : ,0x326
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,event selector CSRs
+
+
+CSR : ,CSR_GPC5_PMES
+CSR Address : ,0x327
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,event selector CSRs
+
+
+CSR : ,CSR_GPC6_PMES
+CSR Address : ,0x328
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,event selector CSRs
+
+
+CSR : ,CSR_ICACHE
+CSR Address : ,0x7c0
+Reset Value : , 
+Bit#,Mode,Description
+0:0,RW,Custom Register 
+
+
+CSR : ,CSR_DCACHE
+CSR Address : ,0x7c1
+Reset Value : , 
+Bit#,Mode,Description
+0:0,RW,Custom Register
+
+
+CSR : ,CSR_PMPCFG0
+CSR Address : ,0x3a0
+Reset Value : , 
+Bit#,Mode,Description
+63:56,RW,hold the configurations 
+55:48,RW,hold the configurations
+47:40,RW,hold the configurations
+39:32,RW,hold the configurations
+31:24,RW,hold the configurations 
+23:16,RW,hold the configurations
+15:8,RW,hold the configurations
+7:0,RW,hold the configurations
+
+
+CSR : ,CSR_PMPCFG2
+CSR Address : ,0x3a2
+Reset Value : , 
+Bit#,Mode,Description
+63:56,RW,hold the configurations 
+55:48,RW,hold the configurations
+47:40,RW,hold the configurations
+39:32,RW,hold the configurations
+31:24,RW,hold the configurations 
+23:16,RW,hold the configurations
+15:8,RW,hold the configurations
+7:0,RW,hold the configurations
+
+
+CSR : ,CSR_PMPADDR0
+CSR Address : ,0x3b0
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR1
+CSR Address : ,0x3b1
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR2
+CSR Address : ,0x3b2
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR3
+CSR Address : ,0x3b3
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR4
+CSR Address : ,0x3b4
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR5
+CSR Address : ,0x3b5
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR6
+CSR Address : ,0x3b6
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR7
+CSR Address : ,0x3b7
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR8
+CSR Address : ,0x3b8
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR9
+CSR Address : ,0x3b9
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR10
+CSR Address : ,0x3ba
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR11
+CSR Address : ,0x3bb
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR12
+CSR Address : ,0x3bc
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR13
+CSR Address : ,0x3bd
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR14
+CSR Address : ,0x3be
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_PMPADDR15
+CSR Address : ,0x3bf
+Reset Value : , 
+Bit#,Mode,Description
+63:0,RW,encodes bits 55-2 of a 56-bit physical address
+
+
+CSR : ,CSR_FFLAGS
+CSR Address : ,0x1
+Reset Value : , 
+Bit#,Mode,Description
+4:0,RW,Floating point Accrued Exceptions
+
+
+CSR : ,CSR_FRM
+CSR Address : ,0x2
+Reset Value : , 
+Bit#,Mode,Description
+2:0,RW,Floating point dynamic rounding mod
+
+
+CSR : ,CSR_FCSR
+CSR Address : ,0x3
+Reset Value : , 
+Bit#,Mode,Description
+7:0,RW,Floating-Point Control and Status Register
+
+
+CSR : ,CSR_FTRAN
+CSR Address : ,0x800
+Reset Value : , 
+Bit#,Mode,Description
+6:0,RW,Floating Point Custom CSR
+
+
+CSR : ,CSR_CYCLE
+CSR Address : ,0xc00
+Reset Value : , 
+Bit#,Mode,Description
+63:0,R,"64 bits of cycle,"
+
+
+CSR : ,CSR_INSTRET
+CSR Address : ,0xc02
+Reset Value : , 
+Bit#,Mode,Description
+63:0,R,64 bits of instret

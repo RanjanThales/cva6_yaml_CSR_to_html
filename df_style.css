@@ -1,0 +1,58 @@
+/* includes alternating gray and white with on-hover color */
+
+.mystyle {
+    font-size: 11pt; 
+    font-family: Arial;
+    border-collapse: collapse; 
+    border: 1px solid silver;
+    width: 85%;
+	word-wrap: normal|break-word
+}
+
+.mystyle table {
+    table-layout: fixed;
+    border: 1px solid silver;
+}
+
+.mystyle th {
+    width: 100px;
+    padding: 5px;
+}
+
+.mystyle tr:nth-child(even) {
+    background: #E0E0E0;
+}
+
+.mystyle tr:hover {
+    background: silver;
+    cursor: pointer;
+}
+
+.mystyle th:nth-child(1) {
+    width: 7%;
+}
+
+.mystyle th:nth-child(2) {
+    width: 7%;
+}
+
+.tbl_main_style {
+    font-size: 11pt; 
+    font-family: Arial;
+    border-collapse: collapse; 
+    border: 1px solid silver;
+	white-space:nowrap;
+}
+
+.tbl_main_style td, th {
+    padding: 5px;
+}
+
+.tbl_main_style tr:nth-child(even) {
+    background: #E0E0E0;
+}
+
+.tbl_main_style tr:hover {
+    background: silver;
+    cursor: pointer;
+}
