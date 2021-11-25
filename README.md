@@ -4,9 +4,11 @@ This Script generate CSR details in .html file from .yaml files
 
 For example:
 
-cv32a6_csr_template.yaml --> cv32a6_csr_template.html
-cv64a6_csr_template.yaml --> cv64a6_csr_template.html
+**cv32a6_csr_template.yaml --> cv32a6_csr_template.html
+**
 
+**cv64a6_csr_template.yaml --> cv64a6_csr_template.html
+**
 How to run:
 
 python converter_yaml_to_html_csv_32.py --inputFile cv32a6_csr_template.yaml
